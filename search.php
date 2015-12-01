@@ -1,6 +1,8 @@
 <?php
+//Do Search on inputted parameters
 function doSearch()
 {
+    //Set up database connections
     $username = "root";
     $password = "team8sqlpass";
     $hostname = "localhost";
@@ -8,8 +10,9 @@ function doSearch()
         or die("Unable to connect to MySQL");
     $selected = mysql_select_db("college_search",$dbhandle)
         or die("Could not select Table");
+    //Create beginning part of query
     $query = "select institutions.Name as name, concat(institutions.Address, ', ',institutions.City, ' ', institutions.State, ' ', institutions.Zip) as address, institutions.Phone as phoneNumber, institutions.Population as population from institutions, institutions_scores where institutions.ID = institutions_scores.InstID";
-
+    //Get variables of call
     $ACT = $_GET['ACTScore'];
     $math = $_GET['mathScore'];
     $reading = $_GET['readingScore'];
@@ -21,6 +24,9 @@ function doSearch()
     $retention = $_GET['retentionRate'];
     $type = $_GET['institutionType'];
     $pop = $_GET['studentPopulation'];
+    //Just prepend sql messages for now
+    //Need to check that inputs are correct eventually
+    //Check if a value exists for a parameter, if it does change the query
     if (!empty($ACT)) {
         $query = $query . " and institutions_scores.ACT <= " . $ACT;
     }
@@ -60,6 +66,7 @@ function doSearch()
     while($row = mysql_fetch_assoc($result)) {
         $rows[] = $row;
     }
+    //Return as JSON page
     print json_encode($rows);
     mysql_close($dbhandle);
 }
