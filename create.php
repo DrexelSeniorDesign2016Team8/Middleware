@@ -11,13 +11,13 @@ $pass = $_GET['pass'];
 
 $json = array();
 
-if ($email === null) {
+if ($email == "") {
 	$json['status'] = 'error';
 	$json['error'] = 'Email is null.';
 } elseif ($pass === null) {
 	$json['status'] = 'error';
 	$json['error'] = 'Password is null.';
-} elseif ($name === null) {
+} elseif ($name == "") {
 	$json['status'] = 'error';
 	$json['error'] = 'Name is null.';
 } elseif (strlen($email) > 255) {
