@@ -1,6 +1,6 @@
 <?php
 
-require_once 'start.php';
+require_once 'setup.php';
 
 // create a user account
 
@@ -8,10 +8,22 @@ require_once 'start.php';
 $email = db_string($_GET['email']);
 $pass = $_GET['pass'];
 
-$prehash = hash('sha256', $pass);
-var_dump($prehash);
+$DB->query("
+	SELECT UserID
+	FROM users
+	WHERE Email = $email");
 
-$hash = password_hash($prehash, PASSWORD_DEFAULT);
-var_dump($hash);
-
+$json = array();
+if ($DB->has_results()) {
+	$json['status'] = 'failure';
+	$json['error'] = 'Email already in use.';
+	echo json_encode($json);
+} else {
+	$prehash = hash('sha256', $pass);
+	$passhash = password_hash($prehash, PASSWORD_DEFAULT);
+	
+	$json['status'] = 'success';
+	$json['response'] = array('email' => $email, 'pass' => $passhash);
+	echo json_encode($json);
+}
 ?>

@@ -1,4 +1,6 @@
 <?php
+//Filesystem
+define('__ROOT__', '/var/www/middleware');
 
 //MySQL
 define('SQLHOST', '127.0.0.1');

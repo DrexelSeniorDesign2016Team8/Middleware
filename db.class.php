@@ -173,7 +173,6 @@ class DB_MYSQL {
 
 	function halt($Msg) {
 		$DBError = 'MySQL: '.strval($Msg).' SQL error: '.strval($this->Errno).' ('.strval($this->Error).')';
-		error('-1');
 	}
 
 	function connect() {
