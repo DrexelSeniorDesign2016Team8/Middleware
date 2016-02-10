@@ -8,22 +8,31 @@ require_once 'setup.php';
 $email = db_string($_GET['email']);
 $pass = $_GET['pass'];
 
-$DB->query("
-	SELECT UserID
-	FROM users
-	WHERE Email = $email");
-
 $json = array();
-if ($DB->has_results()) {
-	$json['status'] = 'failure';
-	$json['error'] = 'Email already in use.';
-	echo json_encode($json);
+
+if ($email === null) {
+	$json['status'] = 'error';
+	$json['error'] = 'Email is null.';
+} elseif ($pass === null) {
+	$json['status'] = 'error';
+	$json['error'] = 'Password is null.';
 } else {
-	$prehash = hash('sha256', $pass);
-	$passhash = password_hash($prehash, PASSWORD_DEFAULT);
-	
-	$json['status'] = 'success';
-	$json['response'] = array('email' => $email, 'pass' => $passhash);
-	echo json_encode($json);
+	$DB->query("
+		SELECT UserID
+		FROM users
+		WHERE Email = $email");
+
+	if ($DB->has_results()) {
+		$json['status'] = 'error';
+		$json['error'] = 'Email already in use.';
+	} else {
+		$prehash = hash('sha256', $pass);
+		$passhash = password_hash($prehash, PASSWORD_DEFAULT);
+		
+		$json['status'] = 'success';
+		$json['response'] = array('email' => $email, 'pass' => $passhash);
+	}
 }
+
+echo json_encode($json);
 ?>
