@@ -42,6 +42,7 @@ def getInstWebsites():
             inst_websites[cleanInstName(temp[1])] = temp[0]
     return inst_websites
 
+
 def getCSVData():
     insts = []
     f = open("collegedata.csv","r")
