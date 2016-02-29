@@ -1,7 +1,9 @@
 <?php
+require_once 'setup.php';
+
 function createSID($userID)
-{
-	require_once 'setup.php';
+{	
+	global $DB;
 	if ($userID == "") {
 		return null;
 	}
