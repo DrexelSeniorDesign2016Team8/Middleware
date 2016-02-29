@@ -1,6 +1,5 @@
 <?php
 require_once 'setup.php';
-
 function createSID($userID)
 {	
 	global $DB;
@@ -22,5 +21,4 @@ function createSID($userID)
 		return "Error?";
 	}
 }
-echo createSID("10") . "\n";
 ?>
