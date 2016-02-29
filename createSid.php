@@ -17,7 +17,7 @@ function createSID($userID)
 	if($DB->query($query)){
 		return $session;
 	} else {
-		return null;
+		return "Error?";
 	}
 }
 echo createSID("10") . "\n";
