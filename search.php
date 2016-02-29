@@ -28,7 +28,6 @@ function doSearch()
     $retention = $_GET['retentionRate'];
     $type = $_GET['institutionType'];
     $pop = $_GET['studentPopulation'];
-    $
     //Just prepend sql messages for now
     //Need to check that inputs are correct eventually
     //Check if a value exists for a parameter, if it does change the query
