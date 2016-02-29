@@ -2,7 +2,16 @@
 require_once 'setup.php';
 
 	$SID = $_GET['sid'];
-	$UID = $_GET['college_id'];
-	$userID = mysql_result($DB->query("select UserID from user_sessions where SessionID = $SID"),0,"UserID");
-	echo $userID . "\n";//$query = "INSERT INTO users_favorites (UserID,InstID) VALUES($userID,$SID)";
+	$InstID = $_GET['college_id'];
+	$result = $DB->query("select UserID from user_sessions where SessionID = $SID");
+	$userID = $result->fetch_row()[0];
+	
+	$query = "delete from users_favorites where UserID = $userID and InstID = $InstID";
+
+	if($DB->query($query)) {
+		print "true";
+	} else {
+		print "error, UserID and InstID combination doesn't exists";
+	}
+
 ?>
