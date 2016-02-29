@@ -1,8 +1,7 @@
 <?php
-require_once 'setup.php';
-
 function createSID($userID)
 {
+	require_once 'setup.php';
 	if ($userID == "") {
 		return null;
 	}
@@ -13,14 +12,13 @@ function createSID($userID)
 		$session .= $characters[rand(0, strlen($characters) - 1)];
 	}
 	$currTime = time();
-	if($DB->query("
-                INSERT INTO user_sessions (UserID,SessionID,Expiration)
-                ldap_get_values(link_identifier, result_entry_identifier, attribute)
-                ($userID,$session,$currTime)")) {
+	$query = "INSERT INTO user_sessions (UserID,SessionID,Expiration) VALUES($userID,$session,$currTime)";
+
+	if($DB->query($query)){
 		return $session;
 	} else {
 		return null;
 	}
 }
-print createSID("10");
+echo createSID("10") . "\n";
 ?>
