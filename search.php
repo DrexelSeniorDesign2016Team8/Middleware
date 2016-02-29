@@ -64,6 +64,7 @@ function doSearch()
     if (!empty($pop)) {
         $query = $query . " and institutions.Population <= " . $pop;
     }
+    print $query;
     $query = $query . " order by institutions.Name limit 10";
     $result = mysql_query($query);
     $rows = array();
