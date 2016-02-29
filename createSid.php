@@ -10,7 +10,7 @@ function createSID($userID)
 
 	$characters  = '0123456789';
 	$session = '';
-	for ($i = 0; $i < 11; $i++) {
+	for ($i = 0; $i < 9; $i++) {
 		$session .= $characters[rand(0, strlen($characters) - 1)];
 	}
 	$currTime = time();
