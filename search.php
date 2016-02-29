@@ -15,7 +15,7 @@ function doSearch()
         $SID = "0";
     }
     //Create beginning part of query
-    $query = "select institutions.ID as instID, institutions.Name as name, concat(institutions.Address, ', ',institutions.City, ' ', institutions.State, ' ', institutions.Zip) as address, institutions.Phone as phoneNumber, institutions.Population as population, (CASE when exists(select users_favorites.InstID from users_favorites,user_sessions where user_sessions.SessionID = " . $SID . " and user_sessions.UserID = users_favorites.UserID and users_favorites.InstID = instID) then 1 else 0 end) as favorited from institutions, institutions_scores where institutions.ID = institutions_scores.InstID";
+    $query = "select institutions.ID as instID, institutions.ID as instIDs, institutions.Name as name, concat(institutions.Address, ', ',institutions.City, ' ', institutions.State, ' ', institutions.Zip) as address, institutions.Phone as phoneNumber, institutions.Population as population, (CASE when exists(select users_favorites.InstID from users_favorites,user_sessions where user_sessions.SessionID = " . $SID . " and user_sessions.UserID = users_favorites.UserID and users_favorites.InstID = instIDs) then 1 else 0 end) as favorited from institutions, institutions_scores where institutions.ID = institutions_scores.InstID";
     //Get variables of call
     $ACT = $_GET['ACTScore'];
     $math = $_GET['mathScore'];
@@ -28,6 +28,7 @@ function doSearch()
     $retention = $_GET['retentionRate'];
     $type = $_GET['institutionType'];
     $pop = $_GET['studentPopulation'];
+    $
     //Just prepend sql messages for now
     //Need to check that inputs are correct eventually
     //Check if a value exists for a parameter, if it does change the query
@@ -64,8 +65,8 @@ function doSearch()
     if (!empty($pop)) {
         $query = $query . " and institutions.Population <= " . $pop;
     }
-    
-    $query = $query . " order by institutions.Name limit 10";
+
+    $query = $query . " order by institutions.Name limit 100";
     $result = mysql_query($query);
     $rows = array();
     while($row = mysql_fetch_assoc($result)) {
