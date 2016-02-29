@@ -7,8 +7,7 @@ CREATE TABLE `users` (
 	`ID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`Email` VARCHAR(100) NOT NULL,
 	`Password` CHAR(64) NOT NULL,
-	`FirstName` VARCHAR(50) NOT NULL,
-	`LastName` VARCHAR(50) DEFAULT NULL,
+	`Name` VARCHAR(255) NOT NULL,
 	PRIMARY KEY (`ID`),
 	UNIQUE KEY (`Email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -65,3 +64,19 @@ CREATE TABLE `users_favorites` (
 	`InstID` int(10) NOT NULL,
 	PRIMARY KEY (`UserID`, `InstID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP Table If EXISTS `user_sessions`;
+CREATE TABLE `user_sessions` (
+	`UserID` int(10) NOT NULL,
+	`SessionID` int(10) NOT NULL,
+	`Expiration` int(15) NOT NULL,
+	PRIMARY KEY (`SessionID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--SET GLOBAL event_scheduler = ON;
+--
+--CREATE EVENT `clear_sessions`
+--ON SCHEDULE EVERY 1 MINUTE
+--DO BEGIN
+--	DELETE from college_search.user_sessions WHERE user_sessions.Expiration <= ((UNIX_TIMESTAMP(NOW()) - 14400);
+--END;
