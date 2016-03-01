@@ -1,7 +1,7 @@
 <?php
 
 require_once 'setup.php';
-require_once 'createSID.php';
+require_once 'createSid.php';
 
 // create a user account
 
