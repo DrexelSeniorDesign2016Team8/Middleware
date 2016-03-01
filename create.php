@@ -38,9 +38,17 @@ if ($email == "") {
 	} else {
 		$prehash = hash('sha256', $pass);
 		$passhash = password_hash($prehash, PASSWORD_DEFAULT);
+
+		$DB->query("
+			INSERT INTO users
+			Email = $email,
+			Password = $passhash,
+			Name = $name");
+
+		$sess_id = createSID($DB->inserted_id());
 		
 		$json['status'] = 'success';
-		$json['response'] = array('email' => $email, 'pass' => $passhash, 'name' => $name);
+		$json['response'] = array('session_id' => $sess_id);
 	}
 }
 
