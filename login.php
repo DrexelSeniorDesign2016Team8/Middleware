@@ -1,6 +1,7 @@
 <?php
 
 require_once 'setup.php';
+require_once 'createSID.php';
 
 // login user
 
