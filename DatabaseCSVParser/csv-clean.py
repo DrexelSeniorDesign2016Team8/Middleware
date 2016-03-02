@@ -1,7 +1,6 @@
 import sys
 import csv
 import re
-import random
 
 class Inst:
     def __init__(self, instId, name=None, address=None, city=None, phone=None, zipcode=None, admission=None, state=None, instType=None, retenRate=None, size=None, reading=None, writing=None, math=None, act=None, url=None):
@@ -23,12 +22,10 @@ class Inst:
         self.url = url
 
     def getInstRow(self):
-        classSize = randint(5,50)
-        return "%s,%s,%s,%s,%s,US,%s,%s,%s,%s,none,%s,%s,%s,%s" % (self.instId,self.name,self.address,self.city,self.state,self.size,self.zipcode,str(classSize),self.retenRate,self.admission,self.phone,self.instType,self.url)
+        return "%s,%s,%s,%s,%s,US,%s,%s,20,%s,none,%s,%s,%s,%s" % (self.instId,self.name,self.address,self.city,self.state,self.size,self.zipcode,self.retenRate,self.admission,self.phone,self.instType,self.url)
 
     def getScoreRow(self):
-        GPA = round(random.uniform(2.5, 3.5),2)
-        return "%s,00,%s,%s,%s,%s" % (self.instId,str(GPA),self.math,self.reading,self.act)
+        return "%s,00,3.0,%s,%s,%s" % (self.instId,self.math,self.reading,self.act)
 
 def cleanInstName(institution):
     institution = re.sub('[^A-Za-z0-9]+', '', institution).lower()
@@ -39,7 +36,7 @@ def getInstWebsites():
     inst_websites = {}
     lines_list = f.readlines()
     for line in lines_list:
-        print (line)
+        print line
         temp = line.split(',')
         if len(temp) != 1:
             inst_websites[cleanInstName(temp[1])] = temp[0]
