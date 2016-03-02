@@ -1,7 +1,7 @@
 <?php
 
 require_once 'setup.php';
-require_once 'createSid.php';
+require_once 'session.class.php';
 
 // create a user account
 
@@ -39,7 +39,7 @@ if ($email == "") {
 			VALUES
 			('$email', '$passhash')");
 
-		$sess_id = createSID($DB->inserted_id());
+		$sess_id = Session::create($DB->inserted_id());
 		
 		$json['status'] = 'success';
 		$json['response'] = array('session_id' => $sess_id);

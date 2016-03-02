@@ -1,7 +1,7 @@
 <?php
 
 require_once 'setup.php';
-require_once 'createSid.php';
+require_once 'session.class.php';
 
 // login user
 
@@ -29,7 +29,7 @@ if ($email == "") {
 
 		if ($valid) {
 			$json['status'] = 'success';
-			$json['response'] = array('session_id' => createSID($user_id));
+			$json['response'] = array('session_id' => Session::create($user_id));
 		} else {
 			$json['status']  = 'error';
 			$json['error'] = 'Email or passwor incorrect';
