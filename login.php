@@ -1,6 +1,7 @@
 <?php
 
 require_once 'setup.php';
+require_once 'createSid.php';
 
 // login user
 
@@ -17,21 +18,25 @@ if ($email == "") {
 	$json['status'] = 'error';
 	$json['error'] = 'Password is null.';
 } else {
-	$prehash = hash('sha256', $pass);
-	$passhash = password_hash($prehash, PASSWORD_DEFAULT);
-
 	$DB->query("
-		SELECT UserID
+		SELECT ID, Password
 		FROM users
-		WHERE Email = $email
-			AND Password = $passhash");
+		WHERE Email = '$email'");
 
 	if ($DB->has_results()) {
-		$json['status'] = 'success';
-		$json['response'] = "There would be a session ID here, but there's not.";
+		list($user_id, $pass_hash) = $DB->next_record();
+		$valid = password_verify(hash('sha256', $pass), $pass_hash);
+
+		if ($valid) {
+			$json['status'] = 'success';
+			$json['response'] = array('session_id' => createSID($user_id));
+		} else {
+			$json['status']  = 'error';
+			$json['error'] = 'Email or passwor incorrect';
+		}
 	} else {
-		$json['status'] = 'error';
-		$json['error'] = 'Email or password incorrect.';
+			$json['status'] = 'error';
+			$json['error'] = 'Email or password incorrect.';
 	}
 }
 
