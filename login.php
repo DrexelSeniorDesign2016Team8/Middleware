@@ -21,16 +21,11 @@ if ($email == "") {
 	$DB->query("
 		SELECT ID, Password
 		FROM users
-		WHERE Email = $email");
+		WHERE Email = '$email'");
 
 	if ($DB->has_results()) {
 		list($user_id, $pass_hash) = $DB->next_record();
 		$valid = password_verify(hash('sha256', $pass), $pass_hash);
-
-		var_dump($pass_hash);
-		var_dump($pass);
-		var_dump(hash('sha256', $pass));
-		var_dump($valid);
 
 		if ($valid) {
 			$json['status'] = 'success';
