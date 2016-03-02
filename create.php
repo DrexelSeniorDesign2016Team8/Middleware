@@ -44,7 +44,7 @@ if ($email == "") {
 			INSERT INTO users
 			(Email, Password, Name)
 			VALUES
-			($email, $passhash, $name)");
+			('$email', '$passhash', '$name')");
 
 		$sess_id = createSID($DB->inserted_id());
 		
