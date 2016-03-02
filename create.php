@@ -6,7 +6,6 @@ require_once 'createSid.php';
 // create a user account
 
 // escape email, but don't escape password--we need to hash it.
-$name = db_string($_GET['name']);
 $email = db_string($_GET['email']);
 $pass = $_GET['pass'];
 
@@ -24,14 +23,11 @@ if ($email == "") {
 } elseif (strlen($email) > 255) {
 	$json['status'] = 'error';
 	$json['error'] = 'Email too long.';
-} elseif (strlen($name) > 255) {
-	$json['status'] = 'error';
-	$json['error'] = 'Name too long.';
 } else {
 	$DB->query("
-		SELECT UserID
+		SELECT ID
 		FROM users
-		WHERE Email = $email");
+		WHERE Email = '$email'");
 
 	if ($DB->has_results()) {
 		$json['status'] = 'error';
@@ -42,9 +38,9 @@ if ($email == "") {
 
 		$DB->query("
 			INSERT INTO users
-			(Email, Password, Name)
+			(Email, Password)
 			VALUES
-			('$email', '$passhash', '$name')");
+			('$email', '$passhash')");
 
 		$sess_id = createSID($DB->inserted_id());
 		
