@@ -1,1 +1,2 @@
 LOAD DATA LOCAL INFILE 'institutions.csv' into table institutions fields terminated by ',' enclosed by '' lines terminated by '\n' ignore 1 lines (ID,Name,Address,City,State,Country,Population,ZIP,ClassSize,Retention,Image,Acceptance,Phone,Type,URL);
+LOAD DATA LOCAL INFILE 'institutions_scores.csv' into table institutions_scores fields terminated by ',' enclosed by '' lines terminated by '\n' ignore 1 lines (InstID,Walk,GPA,SATMath,SATReading,ACT);

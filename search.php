@@ -15,7 +15,7 @@ function doSearch()
         $SID = "0";
     }
     //Create beginning part of query
-    $query = "select institutions.ID as instID, institutions.ID as instIDs, institutions.Name as name, concat(institutions.Address, ', ',institutions.City, ' ', institutions.State, ' ', institutions.Zip) as address, institutions.Phone as phoneNumber, institutions.Population as population, (CASE when exists(select users_favorites.InstID from users_favorites,user_sessions where user_sessions.SessionID = " . $SID . " and user_sessions.UserID = users_favorites.UserID and users_favorites.InstID = instIDs) then 1 else 0 end) as favorited from institutions, institutions_scores where institutions.ID = institutions_scores.InstID";
+    $query = "select institutions.ID as instID, institutions.ID as instIDs, institutions.Name as name, concat(institutions.Address, ', ',institutions.City, ' ', institutions.State, ' ', institutions.Zip) as address, institutions.Phone as phoneNumber, institutions.Population as population, institutions.URL as URL, (CASE when exists(select users_favorites.InstID from users_favorites,user_sessions where user_sessions.SessionID = " . $SID . " and user_sessions.UserID = users_favorites.UserID and users_favorites.InstID = instIDs) then 1 else 0 end) as favorited from institutions, institutions_scores where institutions.ID = institutions_scores.InstID";
     //Get variables of call
     $ACT = $_GET['ACTScore'];
     $math = $_GET['mathScore'];
