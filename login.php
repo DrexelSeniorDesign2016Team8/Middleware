@@ -19,7 +19,7 @@ if ($email == "") {
 	$json['error'] = 'Password is null.';
 } else {
 	$DB->query("
-		SELECT UserID, Password
+		SELECT ID, Password
 		FROM users
 		WHERE Email = $email");
 
