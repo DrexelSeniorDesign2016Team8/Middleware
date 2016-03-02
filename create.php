@@ -17,9 +17,6 @@ if ($email == "") {
 } elseif ($pass === null) {
 	$json['status'] = 'error';
 	$json['error'] = 'Password is null.';
-} elseif ($name == "") {
-	$json['status'] = 'error';
-	$json['error'] = 'Name is null.';
 } elseif (strlen($email) > 255) {
 	$json['status'] = 'error';
 	$json['error'] = 'Email too long.';
