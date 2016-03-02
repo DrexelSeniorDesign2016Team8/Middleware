@@ -1,7 +1,7 @@
 import sys
 import csv
 import re
-import random
+from random import randint,uniform
 
 class Inst:
     def __init__(self, instId, name=None, address=None, city=None, phone=None, zipcode=None, admission=None, state=None, instType=None, retenRate=None, size=None, reading=None, writing=None, math=None, act=None, url=None):
@@ -27,7 +27,7 @@ class Inst:
         return "%s,%s,%s,%s,%s,US,%s,%s,%s,%s,none,%s,%s,%s,%s" % (self.instId,self.name,self.address,self.city,self.state,self.size,self.zipcode,str(classSize),self.retenRate,self.admission,self.phone,self.instType,self.url)
 
     def getScoreRow(self):
-        GPA = round(random.uniform(2.5, 3.5),2)
+        GPA = round(uniform(2.5, 3.5),2)
         return "%s,00,%s,%s,%s,%s" % (self.instId,str(GPA),self.math,self.reading,self.act)
 
 def cleanInstName(institution):
