@@ -53,7 +53,7 @@ class Session {
 	// get user ID corresponding to session ID
 	static function fetch($sess_id) {
 		global $DB;
-		if ($this->verify($sess_id)) {
+		//if ($this->verify($sess_id)) {
 			$DB->query("
 				SELECT UserID
 				FROM user_sessions
@@ -64,9 +64,9 @@ class Session {
 			} else {
 				return false;
 			}
-		} else {
-			return false;
-		}
+		//} else {
+		//	return false;
+		//}
 	}
 
 	// Update the sessions expiry time
