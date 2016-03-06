@@ -78,6 +78,7 @@ function doSearch()
     }
 
     $query = $query . " order by institutions.Name limit 100";
+    print $query . "\n";
     $result = mysql_query($query);
     $rows = array();
     while($row = mysql_fetch_assoc($result)) {
