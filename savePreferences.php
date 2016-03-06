@@ -29,7 +29,7 @@ require_once 'session.class.php';
 		$zip = "null";
 	}
     $DB->query("delete from users_info where UserID = $user");
-    if($DB->query("insert into users_info (UserID,GPA,SATMath,SATReading,ACT,ZIP,State) VALUES($user,$GPA,$math,$reading,$ACT,'$zip','$state'")) {
+    if($DB->query("insert into users_info (UserID,GPA,SATMath,SATReading,ACT,ZIP,State) VALUES($user,$GPA,$math,$reading,$ACT,'$zip','$state')")) {
     	print "true";
     } else {
     	print "Error: Could not save preferences";
