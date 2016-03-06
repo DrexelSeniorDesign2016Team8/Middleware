@@ -1,11 +1,11 @@
 <?php
 require_once 'setup.php';
 require_once 'session.class.php';
-	$SID = $_GET['sid'];
+	$SID = '318080976';//$_GET['sid'];
 
 	$user = Session::fetch($SID);
-
-	$GPA = $_GET['GPAvalue'];
+	echo $user;
+	/*$GPA = $_GET['GPAvalue'];
 	if(empty($GPA)) {
 		$GPA = "null";
 	}
@@ -34,5 +34,5 @@ require_once 'session.class.php';
     	print "true";
     } else {
     	print "Error: Could not save preferences";
-    }
+    }*/
 ?>
