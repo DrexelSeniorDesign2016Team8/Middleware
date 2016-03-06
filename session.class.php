@@ -40,7 +40,7 @@ class Session {
 			$expiry = int($expiry);
 
 			if (time() > $expiry) {
-				$this->kill($sess_id);
+				Session::kill($sess_id);
 				return false;		
 			} else {
 				return true;
@@ -53,7 +53,7 @@ class Session {
 	// get user ID corresponding to session ID
 	static function fetch($sess_id) {
 		global $DB;
-		//if ($this->verify($sess_id)) {
+		if (Session::verify($sess_id)) {
 			$DB->query("
 				SELECT UserID
 				FROM user_sessions
@@ -64,16 +64,16 @@ class Session {
 			} else {
 				return false;
 			}
-		//} else {
-		//	return false;
-		//}
+		} else {
+			return false;
+		}
 	}
 
 	// Update the sessions expiry time
 	static function update($sess_id) {
 		global $DB;
 		
-		if ($this->verify($sess_id)) {
+		if (Session::verify($sess_id)) {
 			$DB->query("
 				UPDATE user_session
 				SET Expiration = ". (time() + 4*60*60) . "
