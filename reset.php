@@ -11,7 +11,7 @@ $DB->query("
 
 if ($DB->has_results()) {
 	$pass = substr(hash('sha256', rand()), 0, 12);
-	$passhash = password_hash(hash('sha256', $pass));
+	$passhash = password_hash(hash('sha256', $pass), PASSWORD_DEFAULT);
 
 	$DB->query("
 		UPDATE users
