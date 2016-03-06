@@ -23,7 +23,8 @@ require_once 'session.class.php';
 	}
 
 	function send_csv_mail($body, $to = 'rwiley1993@gmail.com', $subject = 'Website Report', $from = 'CollegeSearch@searchcollege.me') {
-
+		global $DB;
+	    $SID = $_GET['sid'];
 	    // This will provide plenty adequate entropy
 	    $multipartSep = '-----'.md5(time()).'-----';
 
@@ -50,7 +51,13 @@ require_once 'session.class.php';
 	        . "\r\n"
 	        . "$attachment\r\n"
 	        . "--$multipartSep--";
-
+	     $DB->query("
+				SELECT users.Email as email
+				FROM users,user_sessions
+				WHERE SessionID = " . db_string($SID) . " and users.ID = user_sessions.UserID");
+	    if ($DB->has_results()) {
+			list($to) = $DB->next_record();
+		}
 	    // Send the email, return the result
 	    return mail($to, $subject, $body, implode("\r\n", $headers)); 
 
