@@ -1,30 +1,30 @@
 <?php
 require_once 'setup.php';
 require_once 'session.class.php';
-	$SID = '318080976';//$_GET['sid'];
+	$SID = $_GET['sid'];
 
 	$user = Session::fetch($SID);
-	$GPA = '3.0';//$_GET['GPAvalue'];
+	$GPA = $_GET['GPAvalue'];
 	if(empty($GPA)) {
 		$GPA = "null";
 	}
-    $ACT = '20';//$_GET['ACTScore'];
+    $ACT = $_GET['ACTScore'];
     if(empty($ACT)) {
 		$ACT = "null";
 	}
-    $math = '600';//$_GET['MathScore'];
+    $math = $_GET['MathScore'];
     if(empty($math)) {
 		$math = "null";
 	}
-    $reading = '600';//$_GET['ReadingScore'];
+    $reading = $_GET['ReadingScore'];
     if(empty($reading)) {
 		$reading = "null";
 	}
-    $state = 'PA';//$_GET['stateName'];
+    $state = $_GET['stateName'];
     if(empty($state)) {
 		$state = "null";
 	}
-    $zip = '19104';//$_GET['zipCode'];
+    $zip = $_GET['zipCode'];
     if(empty($zip)) {
 		$zip = "null";
 	}
@@ -33,5 +33,5 @@ require_once 'session.class.php';
     	print "true";
     } else {
     	print "Error: Could not save preferences";
-    }
+    }*/
 ?>
