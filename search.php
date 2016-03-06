@@ -17,20 +17,29 @@ function doSearch()
     //Create beginning part of query
     $query = "select institutions.ID as instID, institutions.ID as instIDs, institutions.Name as name, concat(institutions.Address, ', ',institutions.City, ' ', institutions.State, ' ', institutions.Zip) as address, institutions.Phone as phoneNumber, institutions.Population as population, institutions.URL as URL, (CASE when exists(select users_favorites.InstID from users_favorites,user_sessions where user_sessions.SessionID = " . $SID . " and user_sessions.UserID = users_favorites.UserID and users_favorites.InstID = instIDs) then 1 else 0 end) as favorited from institutions, institutions_scores where institutions.ID = institutions_scores.InstID";
     //Get variables of call
+    //$writing = $_GET['WritingScore'];
+
+    $GPA = $_GET['GPAvalue'];
     $ACT = $_GET['ACTScore'];
-    $math = $_GET['mathScore'];
-    $reading = $_GET['readingScore'];
+    $math = $_GET['MathScore'];
+    $reading = $_GET['ReadingScore'];
     $name = $_GET['name'];
     $state = $_GET['stateName'];
-    $zip = $_GET['zipCode'];
     $address = $_GET['fullAddress'];
-    $accept = $_GET['acceptanceRate'];
+    $accept = $_GET['AcceptanceRate'];
+    $zip = $_GET['zipCode'];
     $retention = $_GET['retentionRate'];
     $type = $_GET['institutionType'];
-    $pop = $_GET['studentPopulation'];
+    $minPop = $_GET['minPop'];
+    $maxPop = $_GET['maxPop'];
+    $minClass = $_GET['minClass'];
+    $maxClass = $_GET['maxClass'];
     //Just prepend sql messages for now
     //Need to check that inputs are correct eventually
     //Check if a value exists for a parameter, if it does change the query
+    if (!empty($GPA)) {
+        $query = $query . " and institution_scores.GPA <= " . $GPA;
+    }
     if (!empty($ACT)) {
         $query = $query . " and institutions_scores.ACT <= " . $ACT;
     }
@@ -61,8 +70,11 @@ function doSearch()
     if (!empty($type)) {
         $query = $query . " and institutions.Type = \"" . $type . "\"";
     }
-    if (!empty($pop)) {
-        $query = $query . " and institutions.Population <= " . $pop;
+    if (!empty($minPop) && !empty($maxPop)) {
+        $query = $query . " and institutions.Population BETWEEN " . $minPop . " and " . $maxPop;
+    }
+    if (!empty($minClass) && !empty($maxClass)) {
+        $query = $query . " and institutions.ClassSize BETWEEN " . $minClass . " and " . $maxClass;
     }
 
     $query = $query . " order by institutions.Name limit 100";
