@@ -3,7 +3,7 @@ require_once 'setup.php';
 require_once 'session.class.php';
 	function create_csv_string() {
     	global $DB;
-	    $SID = "318080976";//$_GET['sid'];
+	    $SID = $_GET['sid'];
 	    $data = $DB->query("select institutions.Name as name, concat(institutions.Address, ', ',institutions.City, ' ', institutions.State, ' ', institutions.Zip) as address, institutions.Phone as phoneNumber, institutions.Population as population, institutions.URL as URL from users_favorites,user_sessions,institutions where user_sessions.SessionID = $SID and users_favorites.UserID = user_sessions.UserID and users_favorites.InstID = institutions.ID");
 
 	    // Open temp file pointer
@@ -12,7 +12,7 @@ require_once 'session.class.php';
 	    fputcsv($fp, array('Name', 'Address', 'Phone Number', 'Population', 'URL'));
 	    
 	    // Loop data and write to file pointer
-	    while ($line = $data_>fetch_array(MYSQLI_NUM)) fputcsv($fp, $line);
+	    while ($line = $data->fetch_array(MYSQLI_NUM)) fputcsv($fp, $line);
 	    
 	    // Place stream pointer at beginning
 	    rewind($fp);
@@ -52,8 +52,12 @@ require_once 'session.class.php';
 	        . "--$multipartSep--";
 
 	    // Send the email, return the result
-	    return @mail($to, $subject, $body, implode("\r\n", $headers)); 
+	    return mail($to, $subject, $body, implode("\r\n", $headers)); 
 
 	}
-	send_csv_mail("Here is a CSV of your favorited institutions");
+	if(send_csv_mail("Here is a CSV of your favorited institutions") == 1) {
+	    echo "true";
+	} else {
+	    echo "false";
+	}
 ?>
