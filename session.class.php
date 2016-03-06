@@ -37,7 +37,7 @@ class Session {
 
 		if ($DB->has_results()) {
 			list($expiry) = $DB->next_record();
-			$expiry = int($expiry);
+			$expiry = (int) $expiry;
 
 			if (time() > $expiry) {
 				Session::kill($sess_id);
