@@ -5,7 +5,7 @@ require_once 'session.class.php';
     	global $DB;
 	    $SID = "318080976";//$_GET['sid'];
 	    $data = $DB->query("select institutions.Name as name, concat(institutions.Address, ', ',institutions.City, ' ', institutions.State, ' ', institutions.Zip) as address, institutions.Phone as phoneNumber, institutions.Population as population, institutions.URL as URL from users_favorites,user_sessions,institutions where user_sessions.SessionID = $SID and users_favorites.UserID = user_sessions.UserID and users_favorites.InstID = institutions.ID");
-
+	    echo "" . $data->num_rows . "\n";
 	    // Open temp file pointer
 	    if (!$fp = fopen('php://temp', 'w+')) return FALSE;
 	    
