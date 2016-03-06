@@ -1,5 +1,5 @@
 <?php
-require_once 'setup.php'
+require_once 'setup.php';
 
 $email = db_string($_GET['email']);
 
