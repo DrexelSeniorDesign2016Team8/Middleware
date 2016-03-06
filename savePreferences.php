@@ -33,5 +33,5 @@ require_once 'session.class.php';
     	print "true";
     } else {
     	print "Error: Could not save preferences";
-    }*/
+    }
 ?>
