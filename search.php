@@ -38,7 +38,7 @@ function doSearch()
     //Need to check that inputs are correct eventually
     //Check if a value exists for a parameter, if it does change the query
     if (!empty($GPA)) {
-        $query = $query . " and institution_scores.GPA <= " . $GPA;
+        $query = $query . " and institutions_scores.GPA <= " . $GPA;
     }
     if (!empty($ACT)) {
         $query = $query . " and institutions_scores.ACT <= " . $ACT;
@@ -78,7 +78,7 @@ function doSearch()
     }
 
     $query = $query . " order by institutions.Name limit 100";
-    print $query . "\n";
+    
     $result = mysql_query($query);
     $rows = array();
     while($row = mysql_fetch_assoc($result)) {
