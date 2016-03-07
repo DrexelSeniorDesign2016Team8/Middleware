@@ -15,7 +15,7 @@ function doSearch()
         $SID = "0";
     }
     //Create beginning part of query
-    $query = "select institutions.ID as instID, institutions.ID as instIDs, institutions.Name as name, concat(institutions.Address, ', ',institutions.City, ' ', institutions.State, ' ', institutions.Zip) as address, institutions.Phone as phoneNumber, institutions.Population as population, institutions.URL as URL, (CASE when exists(select users_favorites.InstID from users_favorites,user_sessions where user_sessions.SessionID = " . $SID . " and user_sessions.UserID = users_favorites.UserID and users_favorites.InstID = instIDs) then 1 else 0 end) as favorited, institutions.CommonApp as CommonApp from institutions, institutions_scores, user_sessions where institutions.ID = institutions_scores.InstID";
+    $query = "select institutions.ID as instID, institutions.ID as instIDs, institutions.Name as name, concat(institutions.Address, ', ',institutions.City, ' ', institutions.State, ' ', institutions.Zip) as address, institutions.Phone as phoneNumber, institutions.Population as population, institutions.URL as URL, (CASE when exists(select users_favorites.InstID from users_favorites,user_sessions where user_sessions.SessionID = " . $SID . " and user_sessions.UserID = users_favorites.UserID and users_favorites.InstID = instIDs) then 1 else 0 end) as favorited, institutions.CommonApp as CommonApp from institutions, institutions_scores, users_favorites, user_sessions where institutions.ID = institutions_scores.InstID";
     //Get variables of call
     //$writing = $_GET['WritingScore'];
 
@@ -88,7 +88,7 @@ function doSearch()
     if (!empty($favorites)) {
         $query = $query . " and user_sessions.SessionID = $SID and users_favorites.UserID = user_sessions.UserID and users_favorites.InstID = institutions.ID";
     }
-    $query = $query . " order by institutions.Name limit 100 group by instID";
+    $query = $query . " group by instID order by institutions.Name limit 100";
 
     $result = mysql_query($query);
     $rows = array();
