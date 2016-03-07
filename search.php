@@ -15,7 +15,7 @@ function doSearch()
         $SID = "0";
     }
     //Create beginning part of query
-    $query = "select institutions.ID as instID, institutions.ID as instIDs, institutions.Name as name, concat(institutions.Address, ', ',institutions.City, ' ', institutions.State, ' ', institutions.Zip) as address, institutions.Phone as phoneNumber, institutions.Population as population, institutions.URL as URL, (CASE when exists(select users_favorites.InstID from users_favorites,user_sessions where user_sessions.SessionID = " . $SID . " and user_sessions.UserID = users_favorites.UserID and users_favorites.InstID = instIDs) then 1 else 0 end) as favorited from institutions, institutions_scores where institutions.ID = institutions_scores.InstID";
+    $query = "select institutions.ID as instID, institutions.ID as instIDs, institutions.Name as name, concat(institutions.Address, ', ',institutions.City, ' ', institutions.State, ' ', institutions.Zip) as address, institutions.Phone as phoneNumber, institutions.Population as population, institutions.URL as URL, (CASE when exists(select users_favorites.InstID from users_favorites,user_sessions where user_sessions.SessionID = " . $SID . " and user_sessions.UserID = users_favorites.UserID and users_favorites.InstID = instIDs) then 1 else 0 end) as favorited, institutions.CommonApp as CommonApp from institutions, institutions_scores, user_sessions where institutions.ID = institutions_scores.InstID";
     //Get variables of call
     //$writing = $_GET['WritingScore'];
 
@@ -23,6 +23,7 @@ function doSearch()
     $ACT = $_GET['ACTScore'];
     $math = $_GET['MathScore'];
     $reading = $_GET['ReadingScore'];
+    $writing = $_GET['WritingScore'];
     $name = $_GET['name'];
     $state = $_GET['stateName'];
     $address = $_GET['fullAddress'];
@@ -34,6 +35,8 @@ function doSearch()
     $maxPop = $_GET['maxPop'];
     $minClass = $_GET['minClass'];
     $maxClass = $_GET['maxClass'];
+    $commonApp = $_GET['commonApplication'];
+    $favorites = $_GET['favoritedInstitutions'];
     //Just prepend sql messages for now
     //Need to check that inputs are correct eventually
     //Check if a value exists for a parameter, if it does change the query
@@ -76,9 +79,17 @@ function doSearch()
     if (!empty($minClass) && !empty($maxClass)) {
         $query = $query . " and institutions.ClassSize BETWEEN " . $minClass . " and " . $maxClass;
     }
-
+    if (!empty($writing)) {
+        $query = $query . " and institutions_scores.SATWriting <= " . $writing;
+    }
+    if (!empty($commonApp)) {
+        $query = $query . " and institutions.CommonApp = 1";
+    }
+    if (!empty($favorites)) {
+        $query = $query . " and user_sessions.SessionID = $SID and users_favorites.UserID = user_sessions.UserID and users_favorites.InstID = institutions.ID";
+    }
     $query = $query . " order by institutions.Name limit 100";
-    
+
     $result = mysql_query($query);
     $rows = array();
     while($row = mysql_fetch_assoc($result)) {
