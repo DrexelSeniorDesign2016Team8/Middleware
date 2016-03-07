@@ -88,7 +88,7 @@ function doSearch()
     if (!empty($favorites)) {
         $query = $query . " and user_sessions.SessionID = $SID and users_favorites.UserID = user_sessions.UserID and users_favorites.InstID = institutions.ID";
     }
-    $query = $query . " order by institutions.Name limit 100";
+    $query = $query . " order by institutions.Name limit 100 group by institutions.ID";
 
     $result = mysql_query($query);
     $rows = array();
