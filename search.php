@@ -95,7 +95,7 @@ function doSearch()
     $query = $query . " group by instID order by institutions.Name";
     if (!empty($page) && !empty($pageSize)) {
 
-        print(typeof($page));
+        print(gettype($page));
         $pagesizeval = (int)(pageSize);
         $pageval = (int)(page);
         $pageval = 1 + (($pageval - 1) * $pagesizeval);
