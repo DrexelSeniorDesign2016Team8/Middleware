@@ -97,11 +97,11 @@ function doSearch()
 
         print(gettype($page));
         print((int)$page);
-        $pagesizeval = (int)(pageSize);
-        $pageval = (int)(page);
-        $pageval = 1 + (($pageval - 1) * $pagesizeval);
+        $pageval = 1 + (((int)$page - 1) * (int)$pageSize);
+        print($pageval);
         $page = strval($pageval);
-        $query = $query . " limit $page,$pageSize";
+        print($page);
+        $query = $query . " limit $pageval,$pageSize";
     } else {
         $query = $query . " limit 100";
     }
