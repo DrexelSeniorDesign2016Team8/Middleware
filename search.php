@@ -94,13 +94,7 @@ function doSearch()
     }
     $query = $query . " group by instID order by institutions.Name";
     if (!empty($page) && !empty($pageSize)) {
-
-        print(gettype($page));
-        print((int)$page);
         $pageval = 1 + (((int)$page - 1) * (int)$pageSize);
-        print($pageval);
-        $page = strval($pageval);
-        print($page);
         $query = $query . " limit $pageval,$pageSize";
     } else {
         $query = $query . " limit 100";
