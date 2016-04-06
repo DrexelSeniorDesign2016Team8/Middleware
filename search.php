@@ -93,7 +93,7 @@ function doSearch()
         $query = $query . " and user_sessions.SessionID = $SID and users_favorites.UserID = user_sessions.UserID and users_favorites.InstID = institutions.ID";
     }
     $query = $query . " group by instID order by institutions.Name";
-    if (!empty($minClass) && !empty($maxClass)) {
+    if (!empty($page) && !empty($pageSize)) {
         $pagesizeval = intval(pageSize);
         $pageval = intval(page);
         $pageval = 1 + (($pageval - 1) * $pagesizeval);
