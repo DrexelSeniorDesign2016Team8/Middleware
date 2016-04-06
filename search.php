@@ -94,8 +94,10 @@ function doSearch()
     }
     $query = $query . " group by instID order by institutions.Name";
     if (!empty($page) && !empty($pageSize)) {
-        $pagesizeval = intval(pageSize);
-        $pageval = intval(page);
+	print("$page,$pageSize");
+        $pagesizeval = (int)(pageSize);
+        $pageval = (int)(page);
+	print ("$pageval,$pagesizeval");
         $pageval = 1 + (($pageval - 1) * $pagesizeval);
         $page = strval($pageval);
         $query = $query . " limit $page,$pageSize";
@@ -103,6 +105,7 @@ function doSearch()
         $query = $query . " limit 100";
     }
 
+    print ($query);
     $result = mysql_query($query);
     $rows = array();
     while($row = mysql_fetch_assoc($result)) {
