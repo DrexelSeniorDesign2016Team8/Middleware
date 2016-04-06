@@ -99,8 +99,6 @@ function doSearch()
     } else {
         $query = $query . " limit 100";
     }
-
-    print ($query);
     $result = mysql_query($query);
     $rows = array();
     while($row = mysql_fetch_assoc($result)) {
