@@ -96,6 +96,7 @@ function doSearch()
     if (!empty($page) && !empty($pageSize)) {
 
         print(gettype($page));
+        print((int)$page);
         $pagesizeval = (int)(pageSize);
         $pageval = (int)(page);
         $pageval = 1 + (($pageval - 1) * $pagesizeval);
