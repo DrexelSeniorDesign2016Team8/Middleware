@@ -2,7 +2,7 @@
 require_once 'setup.php';
 
 	$instID = $_GET['instID'];
-	$sid = $_GET['sid']
+	$sid = $_GET['sid'];
 	if(empty($sid)) {
         $sid = "0";
     }
