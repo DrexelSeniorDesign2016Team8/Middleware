@@ -105,7 +105,7 @@ function doSearch()
         $rows[] = $row;
     }
     //Get the total number of results from the last query regardless of the limit and add it to the end of the JSON
-    $result = mysql_query("select FOUND_ROWS() as totalRows")
+    $result = mysql_query("select FOUND_ROWS() as totalRows");
     while($row = mysql_fetch_assoc($result)) {
         $rows[] = $row;
     }
