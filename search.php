@@ -15,7 +15,7 @@ function doSearch()
         $SID = "0";
     }
     //Create beginning part of query
-    $query = "select institutions.ID as instID, institutions.ID as instIDs, institutions.Name as name,  (CASE when exists(select users_favorites.InstID from users_favorites,user_sessions where user_sessions.SessionID = " . $SID . " and user_sessions.UserID = users_favorites.UserID and users_favorites.InstID = instIDs) then 1 else 0 end) as favorited from institutions, institutions_scores, users_favorites, user_sessions where institutions.ID = institutions_scores.InstID";
+    $query = "select SQL_CALC_FOUND_ROWS institutions.ID as instID, institutions.ID as instIDs, institutions.Name as name,  (CASE when exists(select users_favorites.InstID from users_favorites,user_sessions where user_sessions.SessionID = " . $SID . " and user_sessions.UserID = users_favorites.UserID and users_favorites.InstID = instIDs) then 1 else 0 end) as favorited from institutions, institutions_scores, users_favorites, user_sessions where institutions.ID = institutions_scores.InstID";
     //Get variables of call
     //$writing = $_GET['WritingScore'];
 
@@ -101,6 +101,11 @@ function doSearch()
     }
     $result = mysql_query($query);
     $rows = array();
+    while($row = mysql_fetch_assoc($result)) {
+        $rows[] = $row;
+    }
+    //Get the total number of results from the last query regardless of the limit and add it to the end of the JSON
+    $result = mysql_query("select FOUND_ROWS() as totalRows")
     while($row = mysql_fetch_assoc($result)) {
         $rows[] = $row;
     }
