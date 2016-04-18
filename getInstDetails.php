@@ -14,11 +14,9 @@ require_once 'setup.php';
     }
     if(count($rows) > 0) {
     	$temp = array();
-    	echo json_encode(array('status' => 'success', 'response' => $rows));
+    	echo json_encode(array('status' => 'Success', 'response' => $rows));
     } else {
-    	echo json_encode(array('status' => 'failure', 'response' => 'No response from query'));
+    	echo json_encode(array('status' => 'Error', 'response' => 'No response from query'));
     }
-    //Return as JSON page
-    print json_encode($rows);
 
 ?>
