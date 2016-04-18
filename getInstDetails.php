@@ -1,6 +1,5 @@
 <?php
 require_once 'setup.php';
-	header('Content-type: application/json');
 	$instID = $_GET['instID'];
 	$sid = $_GET['sid'];
 	if(empty($sid)) {
