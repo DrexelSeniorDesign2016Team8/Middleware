@@ -109,8 +109,11 @@ function doSearch()
     while($row = mysql_fetch_assoc($result)) {
         $rows[] = $row;
     }
-    //Return as JSON page
-    print json_encode($rows);
+    if(count($rows) > 0) {
+        echo json_encode(array('status' => 'success', 'response' => $rows));
+    } else {
+        echo json_encode(array('status' => 'Error', 'response' => 'No response from query'));
+    }
     mysql_close($dbhandle);
 }
 doSearch();
