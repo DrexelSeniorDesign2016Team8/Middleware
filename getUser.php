@@ -14,4 +14,6 @@ if($user_name == false) {
 	$json['status'] = 'success';
 	$json['response'] = array('userName' => $user_name);
 }
+
+echo json_encode($json);
 ?>
