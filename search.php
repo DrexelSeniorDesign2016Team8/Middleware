@@ -17,7 +17,7 @@ function doSearch()
     //Create beginning part of query
     //$query = "select SQL_CALC_FOUND_ROWS institutions.ID as instID, institutions.ID as instIDs, institutions.Name as name,  (CASE when exists(select users_favorites.InstID from users_favorites,user_sessions where user_sessions.SessionID = " . $SID . " and user_sessions.UserID = users_favorites.UserID and users_favorites.InstID = instIDs) then 1 else 0 end) as favorited from institutions, institutions_scores, users_favorites, user_sessions where institutions.ID = institutions_scores.InstID";
 
-		$query = "SELECT SQL_CALC_FOUND_ROWS institutions.ID, institutions.name, (SELECT COUNT(users_favorites.UserID) FROM users_favorites JOIN user_sessions ON user_sessions.UserID = users_favorites.UserID WHERE user_sessions.SessionID = '$SID' AND user_favorites.InstID = institutions.ID) as favorited
+		$query = "SELECT SQL_CALC_FOUND_ROWS institutions.ID, institutions.name, (SELECT COUNT(users_favorites.UserID) FROM users_favorites JOIN user_sessions ON user_sessions.UserID = users_favorites.UserID WHERE user_sessions.SessionID = '$SID' AND users_favorites.InstID = institutions.ID) as favorited
 			FROM institutions
 			JOIN institutions_scores ON institutions.ID = institutions_scores.InstID";
 
