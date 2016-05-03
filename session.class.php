@@ -69,6 +69,26 @@ class Session {
 		}
 	}
 
+	// get user name corresponding to session ID
+	static function fetchName($sess_id) {
+		global $DB;
+		if (Session::verify($sess_id)) {
+			$DB->query("
+				SELECT users.Name as userName
+				FROM user_sessions, users
+				WHERE user_sessions.SessionID = " . db_string($sess_id) .
+				" AND user_sessions.UserID = users.ID");
+			if ($DB->has_results()) {
+				list($user_name) = $DB->next_record();
+				return $user_name;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
 	// Update the sessions expiry time
 	static function update($sess_id) {
 		global $DB;
