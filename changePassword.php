@@ -29,6 +29,7 @@ if ($email == "") {
 	if ($DB->has_results()) {
 		list($user_id, $old_pass_hash) = $DB->next_record();
 		$valid = password_verify(hash('sha256', $oldpass), $old_pass_hash);
+	}
 	if(!$valid) {	
 		$json['status'] = 'error';
 		$json['error'] = 'Old password is incorrect';
