@@ -74,7 +74,7 @@ class Session {
 		global $DB;
 		if (Session::verify($sess_id)) {
 			$DB->query("
-				SELECT users.Name as userName
+				SELECT users.Email as userName
 				FROM user_sessions, users
 				WHERE user_sessions.SessionID = " . db_string($sess_id) .
 				" AND user_sessions.UserID = users.ID");

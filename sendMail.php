@@ -58,6 +58,7 @@ require_once 'session.class.php';
 	    if ($DB->has_results()) {
 			list($to) = $DB->next_record();
 		}
+	    echo "Sending email to $to\n";
 	    // Send the email, return the result
 	    return mail($to, $subject, $body, implode("\r\n", $headers)); 
 

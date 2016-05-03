@@ -6,7 +6,7 @@ require_once 'session.class.php';
 $json = array();
 $sid = $_GET['sid'];
 
-$user_name = Session::create($DB->fetchName($sid));
+$user_name = Session::fetchName($sid);
 if($user_name == false) {
 	$json['status'] = 'error';
 	$json['error'] = 'No user found for this session';
