@@ -98,7 +98,7 @@ function doSearch()
     }
     if (!empty($favorites)) {
         //$query = $query . " and user_sessions.SessionID = $SID and users_favorites.UserID = user_sessions.UserID and users_favorites.InstID = institutions.ID";
-				array_push("favorited = 1");
+				array_push($query_parts, "favorited = 1");
     }
 
 		$query = $query . implode(" AND ", $query_parts);
