@@ -19,8 +19,7 @@ function doSearch()
 
 		$query = "SELECT SQL_CALC_FOUND_ROWS institutions.ID, institutions.name, (SELECT COUNT(users_favorites.UserID) FROM users_favorites JOIN user_sessions ON user_sessions.UserID = users_favorites.UserID WHERE user_sessions.SessionID = '$SID' AND user_favorites.InstID = institutions.ID) as favorited
 			FROM institutions
-			JOIN institutions_scores ON institutions.ID = institutions_scores.InstID
-			WHERE";
+			JOIN institutions_scores ON institutions.ID = institutions_scores.InstID";
 
     //Get variables of call
     //$writing = $_GET['WritingScore'];
@@ -101,7 +100,10 @@ function doSearch()
 				array_push($query_parts, "favorited = 1");
     }
 
-		$query = $query . implode(" AND ", $query_parts);
+		if (!empty($query_parts)) {
+			$query = $query . " WHERE ";
+			$query = $query . implode(" AND ", $query_parts);
+		}
 
     $query = $query . " group by institutions.ID order by institutions.Name";
     if (!empty($page) && !empty($pageSize)) {
