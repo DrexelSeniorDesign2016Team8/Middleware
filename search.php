@@ -112,7 +112,7 @@ function doSearch()
 			$query .= " HAVING favorited = 1";
 		}
 
-		if ($filter_options == "sStudentPopulation") {
+		if ($filter_options == "StudentPopulation") {
 			$query .= " ORDER BY institutions.Population";
 		} else {
 			$query .= " ORDER BY institutions.Name";
