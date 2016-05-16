@@ -17,9 +17,14 @@ function doSearch()
     //Create beginning part of query
     //$query = "select SQL_CALC_FOUND_ROWS institutions.ID as instID, institutions.ID as instIDs, institutions.Name as name,  (CASE when exists(select users_favorites.InstID from users_favorites,user_sessions where user_sessions.SessionID = " . $SID . " and user_sessions.UserID = users_favorites.UserID and users_favorites.InstID = instIDs) then 1 else 0 end) as favorited from institutions, institutions_scores, users_favorites, user_sessions where institutions.ID = institutions_scores.InstID";
 
-		$query = "SELECT SQL_CALC_FOUND_ROWS institutions.ID, institutions.name, (SELECT COUNT(users_favorites.UserID) FROM users_favorites JOIN user_sessions ON user_sessions.UserID = users_favorites.UserID WHERE user_sessions.SessionID = '$SID' AND users_favorites.InstID = institutions.ID) as favorited
+		//$query = "SELECT SQL_CALC_FOUND_ROWS institutions.ID, institutions.name, (SELECT COUNT(users_favorites.UserID) FROM users_favorites JOIN user_sessions ON user_sessions.UserID = users_favorites.UserID WHERE user_sessions.SessionID = '$SID' AND users_favorites.InstID = institutions.ID) as favorited
+		//	FROM institutions
+		//	JOIN institutions_scores ON institutions.ID = institutions_scores.InstID";
+
+		$query = "SELECT SQL_CALC_FOUND_ROWS institutions.ID, institutions.Name, favorite.count AS favorited
 			FROM institutions
-			JOIN institutions_scores ON institutions.ID = institutions_scores.InstID";
+			JOIN institutions_scores ON institutions.ID = institutions_scores.InstID
+			LEFT JOIN (SELECT users_favorites.InstID as InstID, COUNT(*) AS count FROM users_favorites JOIN user_sessions ON user_sessions.UserID = users_favorites.UserID WHERE users_sessions.SessionID = '$SID' GROUP BY InstID) AS favorite ON favorite.InstID = institutions.ID";
 
     //Get variables of call
     //$writing = $_GET['WritingScore'];
@@ -95,17 +100,19 @@ function doSearch()
     if (!empty($commonApp)) {
 			array_push($query_parts, "institutions.CommonApp = 1");
     }
-    if (!empty($favorites)) {
-        //$query = $query . " and user_sessions.SessionID = $SID and users_favorites.UserID = user_sessions.UserID and users_favorites.InstID = institutions.ID";
-				array_push($query_parts, "favorited = 1");
-    }
-
 		if (!empty($query_parts)) {
 			$query = $query . " WHERE ";
 			$query = $query . implode(" AND ", $query_parts);
 		}
 
-    $query = $query . " group by institutions.ID order by institutions.Name";
+		$query .= " GROUP BY institutions.ID";
+
+		if (!empty($favorites)) {
+			$query .= " HAVING favorited = 1";
+		}
+
+		$query .= " ORDER BY institution.Name";
+
     if (!empty($page) && !empty($pageSize)) {
         $pageval = 1 + (((int)$page - 1) * (int)$pageSize);
         $query = $query . " limit $pageval,$pageSize";
