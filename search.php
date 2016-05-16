@@ -47,6 +47,7 @@ function doSearch()
     $maxClass = $_GET['maxClass'];
     $commonApp = $_GET['commonApplication'];
     $favorites = $_GET['favoritedInstitutions'];
+		$filter_options = $_GET['filterOptions'];
 
     $page = $_GET['page'];
     $pageSize = $_GET['pageSize'];
@@ -111,7 +112,11 @@ function doSearch()
 			$query .= " HAVING favorited = 1";
 		}
 
-		$query .= " ORDER BY institutions.Name";
+		if ($filter_options == "sStudentPopulation") {
+			$query .= " ORDER BY institutions.Population";
+		} else {
+			$query .= " ORDER BY institutions.Name";
+		}
 
     if (!empty($page) && !empty($pageSize)) {
         $pageval = 1 + (((int)$page - 1) * (int)$pageSize);
