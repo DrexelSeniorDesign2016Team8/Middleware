@@ -111,7 +111,7 @@ function doSearch()
 			$query .= " HAVING favorited = 1";
 		}
 
-		$query .= " ORDER BY institution.Name";
+		$query .= " ORDER BY institutions.Name";
 
     if (!empty($page) && !empty($pageSize)) {
         $pageval = 1 + (((int)$page - 1) * (int)$pageSize);
@@ -138,3 +138,4 @@ function doSearch()
 }
 doSearch();
 ?>
+
