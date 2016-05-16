@@ -24,7 +24,7 @@ function doSearch()
 		$query = "SELECT SQL_CALC_FOUND_ROWS institutions.ID, institutions.Name, favorite.count AS favorited
 			FROM institutions
 			JOIN institutions_scores ON institutions.ID = institutions_scores.InstID
-			LEFT JOIN (SELECT users_favorites.InstID as InstID, COUNT(*) AS count FROM users_favorites JOIN user_sessions ON user_sessions.UserID = users_favorites.UserID WHERE users_sessions.SessionID = '$SID' GROUP BY InstID) AS favorite ON favorite.InstID = institutions.ID";
+			LEFT JOIN (SELECT users_favorites.InstID as InstID, COUNT(*) AS count FROM users_favorites JOIN user_sessions ON user_sessions.UserID = users_favorites.UserID WHERE user_sessions.SessionID = '$SID' GROUP BY InstID) AS favorite ON favorite.InstID = institutions.ID";
 
     //Get variables of call
     //$writing = $_GET['WritingScore'];
