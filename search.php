@@ -57,19 +57,19 @@ function doSearch()
     //Check if a value exists for a parameter, if it does change the query
 		$query_parts = array();
     if (!empty($GPA)) {
-			array_push($query_parts, "institution_scores.GPA <= $GPA");
+			array_push($query_parts, "institutions_scores.GPA <= $GPA");
     }
     if (!empty($ACT)) {
-			array_push($query_parts, "institution_scores.ACT <= $ACT");
+			array_push($query_parts, "institutions_scores.ACT <= $ACT");
     }
     if (!empty($math)) {
-			array_push($query_parts, "institution_scores.SATMath <= $math");
+			array_push($query_parts, "institutions_scores.SATMath <= $math");
     }
     if (!empty($reading)) {
-			array_push($query_parts, "institution_scores.SATReading <= $reading");
+			array_push($query_parts, "institutions_scores.SATReading <= $reading");
     }
     if (!empty($writing)) {
-			array_push($query_parts, "institution_scores.SATWriting <= $writing");
+			array_push($query_parts, "institutions_scores.SATWriting <= $writing");
     }
     if (!empty($name)) {
 			array_push($query_parts, "institutions.Name like \"%" . $name . "%\"");
